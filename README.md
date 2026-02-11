@@ -111,7 +111,34 @@ ros2 launch 4dgs_slam 4dgs_slam_visualization.launch.py
 - colcon
 - python3-dev (build utilities)
 ```
+## 🐳 Docker Support
+        
+### Quick Start with Docker/Podman
 
+We provide a Dockerfile for easy deployment. You can use Docker or Podman.
+
+**Build the Image:**
+```bash
+# Using Podman (Recommended)
+podman build -t 4dgs-slam-ros2 .
+
+# Using Docker
+docker build -t 4dgs-slam-ros2 .
+```
+
+**Run the Container:**
+```bash
+# Using Podman with GPU support
+podman run --rm --gpus all --net=host -it 4dgs-slam-ros2
+
+# Using Docker with GPU support
+docker run --rm --gpus all --net=host -it 4dgs-slam-ros2
+```
+
+### CI/CD
+This repository includes a GitHub Actions workflow that automatically builds and pushes the Docker image to the GitHub Container Registry (GHCR) on every push to the `main` branch.
+
+## 🛠️ Installation
 ## 🛠️ Installation
 
 ### 1. Clone and Setup
