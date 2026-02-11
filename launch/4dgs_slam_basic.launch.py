@@ -9,9 +9,9 @@ def generate_launch_description():
     
     return LaunchDescription([
         Node(
-            package='4dgs_slam',
-            executable='4dgs_slam_node',
-            name='4dgs_slam_node',
+            package='four_dgs_slam',
+            executable='four_dgs_slam_node',
+            name='four_dgs_slam_node',
             output='screen',
             parameters=[],
             remappings=[],
