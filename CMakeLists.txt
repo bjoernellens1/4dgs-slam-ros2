@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(4dgs_slam_ros2)
+project(four_dgs_slam)
 
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
@@ -18,10 +18,15 @@ find_package(geometry_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(cv_bridge REQUIRED)
-find_package(message_runtime REQUIRED)
 
 # Python source files configuration
-ament_python_install_package(${PROJECT_NAME})
+ament_python_install_package(four_dgs_slam)
+
+install(PROGRAMS
+  four_dgs_slam/node.py
+  DESTINATION lib/${PROJECT_NAME}
+  RENAME four_dgs_slam_node
+)
 
 # Install launch files
 install(DIRECTORY
