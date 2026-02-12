@@ -138,6 +138,33 @@ docker run --rm --gpus all --net=host -it 4dgs-slam-ros2
 ### CI/CD
 This repository includes a GitHub Actions workflow that automatically builds and pushes the Docker image to the GitHub Container Registry (GHCR) on every push to the `main` branch.
 
+### AMD GPU Support (ROCm / Strix Halo)
+
+For users with AMD GPUs (including Strix Halo APUs), we provide a specific Dockerfile with ROCm 6.2 support.
+
+**Build the Image:**
+```bash
+docker build -f Dockerfile.rocm -t 4dgs-slam-ros2:rocm-strix .
+```
+
+**Run the Container (Strix Halo):**
+For Strix Halo (Ryzen AI Max 300 series), you may need to override the GFX version to mimic RDNA 3 (gfx1100) if native support isn't detected by PyTorch yet.
+
+```bash
+docker run --rm -it \
+    --device=/dev/kfd \
+    --device=/dev/dri \
+    --group-add video \
+    --group-add render \
+    --ipc=host \
+    --shm-size=8g \
+    --security-opt seccomp=unconfined \
+    -e HSA_OVERRIDE_GFX_VERSION=11.0.0 \
+    4dgs-slam-ros2:rocm-strix
+```
+*Note: If you encounter issues with the `render` group (e.g. "Unable to find group"), try using the group ID directly (e.g. `--group-add 992` if your `/dev/kfd` belongs to group 992), or ensure the group exists.*
+*Note: If Strix Halo detection fails or crashes, you can try `HSA_OVERRIDE_GFX_VERSION=11.0.0` (RDNA 3).*
+
 ## 🛠️ Installation
 ## 🛠️ Installation
 
